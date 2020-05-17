@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: user-service
+  name: user-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        io.kompose.service: user-service
+    spec:
+      containers:
+      - env:
+        - name: UDB_DB_NAME
+#          value: user
+          valueFrom:
+            configMapKeyRef:
+               key: UDB_DB_NAME
+               name: microservice-config
+        - name: UDB_HOSTNAME
+#          value: mysql
+          valueFrom:
+            configMapKeyRef:
+               key: UDB_HOSTNAME
+               name: microservice-config
+        - name: UDB_PASSWORD
+#          value: root
+          valueFrom:
+            secretKeyRef:
+               key: UDB_PASSWORD
+               name: microservice-secret
+        - name: UDB_PORT
+#          value: "3306"
+          valueFrom:
+            configMapKeyRef:
+               key: UDB_PORT
+               name: microservice-config
+        - name: UDB_USERNAME
+#          value: root
+          valueFrom:
+            configMapKeyRef:
+               key: UDB_USERNAME
+               name: microservice-config
+        image: manishnauty/user-service:0.0.1-SNAPSHOT
+        name: user-service
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always

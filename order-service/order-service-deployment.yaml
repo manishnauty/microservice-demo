@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: order-service
+  name: order-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        io.kompose.service: order-service
+    spec:
+      containers:
+      - image: manishnauty/order-service:0.0.1-SNAPSHOT
+        name: order-service
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    io.kompose.service: user-order-aggregation-service
+  name: user-order-aggregation-service
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "8082"
+    port: 8082
+    targetPort: 8080
+  selector:
+    io.kompose.service: user-order-aggregation-service
+

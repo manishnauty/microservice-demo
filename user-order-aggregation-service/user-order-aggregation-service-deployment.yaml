@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: user-order-aggreagation-service
+  name: user-order-aggregation-service
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        io.kompose.service: user-order-aggregation-service
+    spec:
+      containers:
+      - image: manishnauty/user-order-aggregation-service:0.0.1-SNAPSHOT
+        name: user-order-aggregation-service
+        ports:
+        - containerPort: 8080
+      restartPolicy: Always
