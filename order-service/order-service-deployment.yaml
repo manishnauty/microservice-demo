@@ -2,18 +2,52 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: order-service
+    app: order-service
   name: order-service
+  namespace: default
 spec:
   replicas: 3
+  minReadySeconds: 45
+  selector:
+    matchLabels:
+      app: currency-exchange
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        io.kompose.service: order-service
+        app: order-service
     spec:
       containers:
       - image: manishnauty/order-service:0.0.1-SNAPSHOT
+        imagePullPolicy: IfNotPresent
         name: order-service
         ports:
-        - containerPort: 8080
+        - name: liveness-port
+          containerPort: 8080
+        resources:
+           requests:
+              #cpu: 200m
+              memory: 512Mi
+           limits:
+              #cpu: 200m 
+              memory: 1024Mi
+        readinessProbe:
+           httpGet:
+              path: /
+              port: liveness-port
+           failureThreadhold: 5
+           initialDelaySeconds: 60
+           periodSeconds: 10
+        livenessProbe:
+           httpGet:
+              path: /
+              port: liveness-port
+           failureThreadhold: 5
+           initialDelaySeconds: 60
+           periodSeconds: 10
       restartPolicy: Always
+      terminationGracePeriodSeconds: 30

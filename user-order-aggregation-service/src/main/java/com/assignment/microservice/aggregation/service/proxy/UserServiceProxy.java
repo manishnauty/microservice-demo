@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.assignment.microservice.aggregation.model.UserDetails;
 
-@FeignClient(name="user-service", url="${USER_SERVICE_HOST:http://localhost}:8080")
+@FeignClient(name="user-service", url="${USER_SERVICE_URI:http://localhost}:8080")
 public interface UserServiceProxy {
 	
 	@GetMapping("/user/{id}")

@@ -2,14 +2,17 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    io.kompose.service: user-order-aggregation-service
+    app: user-order-aggregation-service
   name: user-order-aggregation-service
+  namespace: default
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - name: "8082"
     port: 8082
     targetPort: 8080
+    protocal: TCP
   selector:
-    io.kompose.service: user-order-aggregation-service
+    app: user-order-aggregation-service
+  sessionAffinity: None
 

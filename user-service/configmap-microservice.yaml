@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  UDB_DB_NAME: user
+  UDB_HOSTNAME: root
+  UDB_PORT: 3306
+  UDB_USERNAME: root
+kind: ConfigMap
+metadata:
+  name: microservice-config
+  namespace: default

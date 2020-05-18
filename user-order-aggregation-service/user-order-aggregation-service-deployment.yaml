@@ -2,18 +2,56 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   labels:
-    io.kompose.service: user-order-aggreagation-service
+    app: user-order-aggreagation-service
   name: user-order-aggregation-service
+  namespace: default
 spec:
   replicas: 3
+  minReadySeconds: 45
+  selector:
+    matchLabels:
+      app: currency-exchange
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        io.kompose.service: user-order-aggregation-service
+        app: user-order-aggregation-service
     spec:
       containers:
       - image: manishnauty/user-order-aggregation-service:0.0.1-SNAPSHOT
         name: user-order-aggregation-service
+        env:
+        - name: ORDER_SERVICE_URI
+          value: http://order-service
+        - name: USER_SERVICE_URI
+          value: http://user-exchange
         ports:
-        - containerPort: 8080
+        - name: liveness-port
+          containerPort: 8080
+        resources:
+           requests:
+              #cpu: 200m
+              memory: 512Mi
+           limits:
+              #cpu: 200m 
+              memory: 1024Mi
+        readinessProbe:
+           httpGet:
+              path: /
+              port: liveness-port
+           failureThreadhold: 5
+           initialDelaySeconds: 60
+           periodSeconds: 10
+        livenessProbe:
+           httpGet:
+              path: /
+              port: liveness-port
+           failureThreadhold: 5
+           initialDelaySeconds: 60
+           periodSeconds: 10 
       restartPolicy: Always
+      terminationGracePeriodSeconds: 30
