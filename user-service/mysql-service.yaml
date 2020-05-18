@@ -1,18 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.19.0 ()
+  creationTimestamp: null
   labels:
-    app: mysql
+    io.kompose.service: mysql
   name: mysql
-  namespace: default
 spec:
   type: ClusterIP
   ports:
   - name: "3306"
     port: 3306
     targetPort: 3306
-    protocal: TCP
   selector:
-    app: mysql
-  sessionAfinity: None
-
+    io.kompose.service: mysql

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.assignment.microservice.aggregation.model.Order;
 
-@FeignClient(name="order-service", url="${ORDER_SERVICE_URI:http://localhost}:8080")
+@FeignClient(name="order-service", url="${ORDER_SERVICE_URI:http://localhost}:8081")
 public interface OrderServiceProxy {
 	
 	@GetMapping("/order/{id}")

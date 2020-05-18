@@ -11,8 +11,6 @@ spec:
   - name: "8082"
     port: 8082
     targetPort: 8080
-    protocal: TCP
   selector:
     app: user-order-aggregation-service
-  sessionAffinity: None
 

@@ -32,7 +32,7 @@ public class UserController {
 		return userDetails;
 	}
 	
-	@GetMapping(path="/user/message")
+	@GetMapping(path="/health")
 	String getMessage() {
 		return "application is up and running";
 	}

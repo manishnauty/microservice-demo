@@ -5,7 +5,7 @@ metadata:
     io.kompose.service: mysql
   name: mysql
 spec:
-  replicas: 2
+  replicas: 1 
   strategy:
     type: Recreate
   template:
@@ -23,9 +23,11 @@ spec:
           value: root
         - name: MYSQL_USER
           value: root
+        - name: MYSQL_HOSTNAME
+          value: mysql
         image: mysql:5.7
         args:
-        - "--ignore-db-dir=lost+found" #change
+          - "--ignore-db-dir=lost+found" #CHANGE
         name: mysql
         ports:
         - containerPort: 3306

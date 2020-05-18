@@ -6,16 +6,7 @@ metadata:
   name: user-service
   namespace: default
 spec:
-  replicas: 3
-  minReadySeconds: 45
-  selector:
-    matchLabels:
-      app: currency-exchange
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+  replicas: 1
   template:
     metadata:
       labels:
@@ -55,30 +46,6 @@ spec:
                name: microservice-config
         image: manishnauty/user-service:0.0.1-SNAPSHOT
         name: user-service
-        imagePullPolicy: IfNotPresent
         ports:
-        - name: liveness-port
-          containerPort: 8080
-        resources:
-           requests:
-              #cpu: 200m
-              memory: 512Mi
-           limits:
-              #cpu: 200m 
-              memory: 1024Mi
-        readinessProbe:
-           httpGet:
-              path: /
-              port: liveness-port
-           failureThreadhold: 5
-           initialDelaySeconds: 60
-           periodSeconds: 10
-        livenessProbe:
-           httpGet:
-              path: /
-              port: liveness-port
-           failureThreadhold: 5
-           initialDelaySeconds: 60
-           periodSeconds: 10
+        - containerPort: 8080
       restartPolicy: Always
-      terminationGracePeriodSeconds: 30

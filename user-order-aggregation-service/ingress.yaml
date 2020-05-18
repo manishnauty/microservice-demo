@@ -11,5 +11,5 @@ spec:
       - path: /orderdetails/*
         backend:
           serviceName: user-order-aggregation-service
-          servicePort: 8000          
+          servicePort: 8082          
       
