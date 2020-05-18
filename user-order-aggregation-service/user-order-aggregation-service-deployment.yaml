@@ -5,7 +5,7 @@ metadata:
     io.kompose.service: user-order-aggreagation-service
   name: user-order-aggregation-service
 spec:
-  replicas: 1
+  replicas: 3
   template:
     metadata:
       labels:
